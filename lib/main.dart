@@ -1,4 +1,6 @@
+import 'package:e_commerce_application/screens/(Auth)/login_screen.dart';
 import 'package:e_commerce_application/screens/add_product_screen.dart';
+import 'package:e_commerce_application/screens/cart_screen.dart';
 import 'package:e_commerce_application/screens/edit_product_screen.dart';
 import 'package:e_commerce_application/screens/home_screen.dart';
 import 'package:e_commerce_application/screens/product_detail_screen.dart';
@@ -19,12 +21,22 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // colorScheme: ColorScheme.dark(),
+
+        // textTheme: const TextTheme(
+        //   bodyLarge: TextStyle(color: Colors.red),
+        //   bodyMedium: TextStyle(color: Colors.red),
+        //   titleLarge: TextStyle(color: Colors.red),
+        //   // Add more styles if needed
+        // ),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => const HomeScreen(),
         '/add-product': (context) => const AddProductScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/cart': (context) => const CartScreen(),
+        '/profile': (context) => const CartScreen(),
       },
       onGenerateRoute: (settings) {
         final uri = Uri.parse(settings.name!);
