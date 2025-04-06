@@ -1,3 +1,5 @@
+import 'package:e_commerce_application/model/product_model.dart';
+import 'package:e_commerce_application/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,6 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
+        backgroundColor: Colors.red[200],
         child: ListView(
           children: [
             const DrawerHeader(child: Text('KarthiKart Menu')),
@@ -38,55 +41,35 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
 
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
-        ),
-        title: const Text(
-          "KarthiKart",
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            icon: const Icon(Icons.login),
-          ),
-          IconButton(
-            onPressed: () {
-              // logout Logic
-            },
-            icon: const Icon(Icons.logout),
-          ),
-          IconButton(
-            icon: const Icon(Icons.account_circle),
-            onPressed: () {
-              Navigator.pushNamed(context, '/profile');
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.pushNamed(context, '/cart');
-            },
-          ),
-        ],
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: CustomAppBar(),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [const Text("Home Screen Body")],
+
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 2 items per row
         ),
+
+        itemCount: sampleProducts.length,
+        itemBuilder: (context, index) {
+          final product = sampleProducts[index];
+          return Card(
+            color: Colors.red.shade100,
+            margin: const EdgeInsets.all(8),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(product.title),
+                  Text(product.category),
+                  Text('\$${product.price}'),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
