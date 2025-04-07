@@ -1,42 +1,87 @@
+import 'package:e_commerce_application/model/user_login_credentials_model.dart';
+import 'package:e_commerce_application/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _obscureText = true;
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  void _submit() {
+    final credentials = UserLoginCredentialsModel(
+      userName: _usernameController.text,
+      password: _passwordController.text,
+    );
+    print("User Credetials: $credentials");
+  }
+
+  // final String username_email = Contr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login Screen')),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: const CustomAppBar(),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text("Enter Username/Email:"),
-              const SizedBox(height: 8),
-              const TextField(
-                decoration: InputDecoration(
+              const Text(
+                "Login with Credentials",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              ),
+              const SizedBox(height: 50),
+              TextField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Username or Email',
+                  suffixIcon: Icon(Icons.email),
                 ),
               ),
-              const SizedBox(height: 16),
-              const Text("Enter Password:"),
-              const SizedBox(height: 8),
-              const TextField(
-                obscureText: true,
+              const SizedBox(height: 20),
+              TextField(
+                controller: _passwordController,
+                obscureText: _obscureText,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Password',
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Login logic here
-                },
-                child: const Text("Login"),
+                onPressed: _submit,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.green),
+                ),
+                child: const Text(
+                  "Login",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
               ),
               TextButton(
                 onPressed: () {
