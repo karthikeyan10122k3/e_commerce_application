@@ -1,5 +1,6 @@
-import 'package:e_commerce_application/model/product_model.dart';
+import 'package:e_commerce_application/model/product/product_model.dart';
 import 'package:e_commerce_application/widgets/custom_app_bar.dart';
+import 'package:e_commerce_application/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,39 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        backgroundColor: Colors.red[200],
-        child: ListView(
-          children: [
-            const DrawerHeader(child: Text('KarthiKart Menu')),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/');
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.add),
-              title: const Text('Add Product'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/add-product');
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.edit),
-              title: const Text('Edit Product'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/edit-product/2');
-              },
-            ),
-          ],
-        ),
-      ),
-
+      drawer: const CustomDrawer(),
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),

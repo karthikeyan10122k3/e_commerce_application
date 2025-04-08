@@ -1,5 +1,6 @@
-import 'package:e_commerce_application/model/user_login_credentials_model.dart';
+import 'package:e_commerce_application/model/user/user_login_credentials_model.dart';
 import 'package:e_commerce_application/widgets/custom_app_bar.dart';
+import 'package:e_commerce_application/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: const CustomAppBar(),
@@ -71,23 +73,27 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _submit,
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.green),
-                ),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 child: const Text(
                   "Login",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
               ),
+
+              const SizedBox(height: 20),
+
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');
                 },
-                child: const Text("Don't have an Account? Sign up"),
+                child: const Text(
+                  "Don't have an Account? Sign up here",
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
             ],
           ),

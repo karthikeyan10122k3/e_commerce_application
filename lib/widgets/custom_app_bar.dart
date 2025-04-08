@@ -1,51 +1,71 @@
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
+
+  @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+  final _searchInputController = TextEditingController();
+
+  void _searchProduct() {
+    print(_searchInputController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.red,
-      leading: Builder(
-        builder:
-            (context) => IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            ),
+      leading: IconButton(
+        icon: const Icon(Icons.menu),
+        onPressed: () => Scaffold.of(context).openDrawer(),
       ),
-      title: const Text(
-        "KarthiKart",
-        style: TextStyle(
-          fontSize: 30,
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
+      title: GestureDetector(
+        onTap: () => Navigator.pushNamed(context, '/'),
+        child: const Text(
+          "KarthiKart",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
       actions: [
+        SizedBox(
+          width: 220,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextField(
+              controller: _searchInputController,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(10),
+                hintText: "Search",
+                filled: true,
+                fillColor: Colors.white,
+                suffixIcon: IconButton(
+                  onPressed: _searchProduct,
+                  icon: Icon(Icons.search),
+                ),
+              ),
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ),
         IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/login');
-          },
-          icon: const Icon(Icons.login),
+          onPressed: () => Navigator.pushNamed(context, '/login'),
+          icon: const Icon(Icons.login, color: Colors.white),
         ),
         IconButton(
           onPressed: () {
-            // logout Logic
+            // TODO: Add logout logic
           },
-          icon: const Icon(Icons.logout),
-        ),
-        IconButton(
-          icon: const Icon(Icons.account_circle),
-          onPressed: () {
-            Navigator.pushNamed(context, '/profile');
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          onPressed: () {
-            Navigator.pushNamed(context, '/cart');
-          },
+          icon: const Icon(Icons.logout, color: Colors.white),
         ),
       ],
     );

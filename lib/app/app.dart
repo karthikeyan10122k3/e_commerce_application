@@ -1,5 +1,5 @@
-import 'package:e_commerce_application/screens/(Auth)/login_screen.dart';
-import 'package:e_commerce_application/screens/(Auth)/register_screen.dart';
+import 'package:e_commerce_application/screens/(Auth)/login/login_screen.dart';
+import 'package:e_commerce_application/screens/(Auth)/registration/register_screen_1.dart';
 import 'package:e_commerce_application/screens/add_product_screen.dart';
 import 'package:e_commerce_application/screens/cart_screen.dart';
 import 'package:e_commerce_application/screens/edit_product_screen.dart';
@@ -34,7 +34,7 @@ class App extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/cart': (context) => const CartScreen(),
         '/profile': (context) => const UserProfileScreen(),
-        '/register': (context) => const RegisterScreen(),
+        '/register': (context) => const RegisterScreen1(),
       },
       onGenerateRoute: (settings) {
         final uri = Uri.parse(settings.name!);
