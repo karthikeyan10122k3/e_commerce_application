@@ -1,3 +1,6 @@
+import 'package:e_commerce_application/model/User/user_cart_model.dart';
+import 'package:e_commerce_application/model/User/user_orders_model.dart';
+
 class UserModel {
   String? firstName;
   String? lastName;
@@ -12,22 +15,27 @@ class UserModel {
   String? city;
   int? zipCode;
   bool? isVerified;
+  List<UserOrdersModel> userOrders;
+  List<UserCartModel> userCartItems;
 
   UserModel({
     this.firstName = '',
     this.lastName = '',
-    this.userName = '', //Screen 4 pending
-    this.password = '', //Screen 4 pending
-    this.email = '', //Screen 4 pending
+    this.userName = '',
+    this.password = '',
+    this.email = '',
     this.mobile,
     this.dob = '',
     this.gender = '',
     this.country = '',
     this.state = '',
     this.city = '',
-    this.zipCode,
+    this.zipCode = 0,
     this.isVerified = false,
-  });
+    List<UserOrdersModel>? userOrders,
+    List<UserCartModel>? userCartItems,
+  }) : userOrders = userOrders ?? [],
+       userCartItems = userCartItems ?? [];
 
   @override
   String toString() {

@@ -1,6 +1,5 @@
 import 'package:e_commerce_application/model/user/user_login_credentials_model.dart';
-import 'package:e_commerce_application/widgets/custom_app_bar.dart';
-import 'package:e_commerce_application/widgets/custom_drawer.dart';
+import 'package:e_commerce_application/widgets/layout/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,18 +19,18 @@ class _LoginScreenState extends State<LoginScreen> {
       userName: _usernameController.text,
       password: _passwordController.text,
     );
+    // ignore: avoid_print
     print("User Credetials: $credentials");
   }
 
-  // final String username_email = Contr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: const CustomAppBar(),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(kToolbarHeight),
+      //   child: const CustomAppBar(),
+      // ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

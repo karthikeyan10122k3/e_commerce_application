@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:e_commerce_application/model/user/user_model.dart';
 import 'package:e_commerce_application/screens/(Auth)/registration/register_screen_2.dart';
-import 'package:e_commerce_application/widgets/custom_app_bar.dart';
-import 'package:e_commerce_application/widgets/custom_drawer.dart';
+import 'package:e_commerce_application/widgets/layout/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen1 extends StatefulWidget {
@@ -91,10 +90,10 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const CustomDrawer(),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: const CustomAppBar(),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(kToolbarHeight),
+      //   child: const CustomAppBar(),
+      // ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16),

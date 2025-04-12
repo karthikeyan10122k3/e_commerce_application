@@ -1,10 +1,34 @@
-import 'package:e_commerce_application/model/product/product_model.dart';
-import 'package:e_commerce_application/widgets/custom_app_bar.dart';
-import 'package:e_commerce_application/widgets/custom_drawer.dart';
+import 'package:e_commerce_application/screens/cart_screen.dart';
+import 'package:e_commerce_application/screens/products_display_screen.dart';
+import 'package:e_commerce_application/screens/settings_screen.dart';
+import 'package:e_commerce_application/screens/user_profile_screen.dart';
+import 'package:e_commerce_application/widgets/layout/custom_app_bar.dart';
+import 'package:e_commerce_application/widgets/layout/custom_bottom_navigation_bar.dart';
+import 'package:e_commerce_application/widgets/layout/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  void _changeIndex(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _pages = [
+    ProductsDisplayScreen(),
+    UserProfileScreen(),
+    CartScreen(),
+    SettingsScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -14,32 +38,12 @@ class HomeScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(),
       ),
-
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 items per row
-        ),
-
-        itemCount: sampleProducts.length,
-        itemBuilder: (context, index) {
-          final product = sampleProducts[index];
-          return Card(
-            color: Colors.red.shade100,
-            margin: const EdgeInsets.all(8),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(product.title),
-                  Text(product.category),
-                  Text('\$${product.price}'),
-                ],
-              ),
-            ),
-          );
-        },
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _changeIndex,
       ),
+      // body: _pages[_selectedIndex],
+      body: _pages[2],
     );
   }
 }

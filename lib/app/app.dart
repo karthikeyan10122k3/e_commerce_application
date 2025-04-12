@@ -5,6 +5,7 @@ import 'package:e_commerce_application/screens/cart_screen.dart';
 import 'package:e_commerce_application/screens/edit_product_screen.dart';
 import 'package:e_commerce_application/screens/home_screen.dart';
 import 'package:e_commerce_application/screens/product_detail_screen.dart';
+import 'package:e_commerce_application/screens/products_bought_screen.dart';
 import 'package:e_commerce_application/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
 
       theme: ThemeData(
         // colorScheme: ColorScheme.dark(),
+        // scaffoldBackgroundColor: const Color.fromARGB(192, 107, 44, 243),
 
         // textTheme: const TextTheme(
         //   bodyLarge: TextStyle(color: Colors.red),
@@ -29,12 +31,13 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => HomeScreen(),
         '/add-product': (context) => const AddProductScreen(),
         '/login': (context) => const LoginScreen(),
         '/cart': (context) => const CartScreen(),
         '/profile': (context) => const UserProfileScreen(),
         '/register': (context) => const RegisterScreen1(),
+        '/product-bought': (context) => const ProductsBoughtScreen(),
       },
       onGenerateRoute: (settings) {
         final uri = Uri.parse(settings.name!);

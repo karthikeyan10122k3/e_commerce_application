@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class RegisterScreen4 extends StatefulWidget {
   final UserModel? userDetailObject;
-  const RegisterScreen4({Key? key, this.userDetailObject}) : super(key: key);
+  const RegisterScreen4({super.key, this.userDetailObject});
 
   @override
   _RegisterScreen4State createState() => _RegisterScreen4State();

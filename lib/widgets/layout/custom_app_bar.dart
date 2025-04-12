@@ -20,25 +20,25 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.red,
+      backgroundColor: const Color.fromARGB(255, 69, 6, 241),
       leading: IconButton(
         icon: const Icon(Icons.menu),
         onPressed: () => Scaffold.of(context).openDrawer(),
       ),
-      title: GestureDetector(
-        onTap: () => Navigator.pushNamed(context, '/'),
-        child: const Text(
-          "KarthiKart",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
+      // title: GestureDetector(
+      //   onTap: () => Navigator.pushNamed(context, '/'),
+      //   child: const Text(
+      //     "KarthiKart",
+      //     style: TextStyle(
+      //       fontSize: 24,
+      //       fontWeight: FontWeight.bold,
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      // ),
       actions: [
         SizedBox(
-          width: 220,
+          width: 350,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextField(
