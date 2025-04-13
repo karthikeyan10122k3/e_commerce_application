@@ -41,7 +41,7 @@ class _RegisterScreen3State extends State<RegisterScreen3> {
       _userDetailObject.country = _countryController.text.trim();
       _userDetailObject.state = _stateController.text.trim();
       _userDetailObject.city = _cityController.text.trim();
-      _userDetailObject.zipCode = int.parse(_zipCodeController.text.trim());
+      _userDetailObject.zipCode = _zipCodeController.text.trim();
     });
 
     Navigator.push(

@@ -18,11 +18,16 @@ class VerticalProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            product.thumbnail,
-            height: 150,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/product-details/${product.id}');
+            },
+            child: Image.network(
+              product.thumbnail,
+              height: 150,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
@@ -37,11 +42,19 @@ class VerticalProductCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  product.description,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.grey),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/product-details/${product.id}',
+                    );
+                  },
+                  child: Text(
+                    product.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -73,21 +86,51 @@ class VerticalProductCard extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                _isInCart
-                    ? ElevatedButton(
-                      onPressed: _onRemoveFromCart,
+
+                Row(
+                  children: [
+                    _isInCart
+                        ? ElevatedButton(
+                          onPressed: _onRemoveFromCart,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: const Text("Remove from Cart"),
+                        )
+                        : ElevatedButton(
+                          onPressed: _onAddToCart,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                          ),
+                          child: const Text(
+                            "Add to Cart",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                    SizedBox(width: 7),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/edit-product/${product.id}',
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor: Colors.grey,
                       ),
-                      child: const Text("Remove from Cart"),
-                    )
-                    : ElevatedButton(
-                      onPressed: _onAddToCart,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
+                      child: const Text(
+                        "Edit",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      child: const Text("Add to Cart"),
                     ),
+                  ],
+                ),
               ],
             ),
           ),

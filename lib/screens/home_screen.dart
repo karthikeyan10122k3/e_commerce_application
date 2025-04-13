@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         onTap: _changeIndex,
       ),
-      // body: _pages[_selectedIndex],
-      body: _pages[2],
+      body: _pages[_selectedIndex],
+      // body: _pages[2],
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:e_commerce_application/screens/add_product_screen.dart';
 import 'package:e_commerce_application/screens/cart_screen.dart';
 import 'package:e_commerce_application/screens/edit_product_screen.dart';
 import 'package:e_commerce_application/screens/home_screen.dart';
-import 'package:e_commerce_application/screens/product_detail_screen.dart';
+import 'package:e_commerce_application/screens/product_details_screen.dart';
 import 'package:e_commerce_application/screens/products_bought_screen.dart';
 import 'package:e_commerce_application/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -42,10 +42,10 @@ class App extends StatelessWidget {
       onGenerateRoute: (settings) {
         final uri = Uri.parse(settings.name!);
         if (uri.pathSegments.length == 2 &&
-            uri.pathSegments[0] == 'product-detail') {
-          final id = uri.pathSegments[1];
+            uri.pathSegments[0] == 'product-details') {
+          final int id = int.parse(uri.pathSegments[1]);
           return MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(productId: id),
+            builder: (context) => ProductDetailsScreen(productId: id),
           );
         }
         if (uri.pathSegments.length == 2 &&

@@ -31,7 +31,7 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Edit Product'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/edit-product/2');
+              Navigator.pushNamed(context, '/edit-product/-1');
             },
           ),
           ListTile(

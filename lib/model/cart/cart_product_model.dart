@@ -9,6 +9,7 @@ class CartProductModel {
   double rating;
   String availabilityStatus;
   int minimumOrderQuantity;
+  String shippingInformation;
   String thumbnail;
 
   CartProductModel({
@@ -22,6 +23,7 @@ class CartProductModel {
     this.rating = 0.00,
     this.availabilityStatus = '',
     this.minimumOrderQuantity = 0,
+    this.shippingInformation = '',
     this.thumbnail = '',
   });
 }
@@ -39,6 +41,7 @@ List<CartProductModel> sampleCartProducts = [
     stock: 5,
     minimumOrderQuantity: 24,
     availabilityStatus: "Low Stock",
+    shippingInformation: "Ships in 1 month",
 
     thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
@@ -55,6 +58,7 @@ List<CartProductModel> sampleCartProducts = [
     stock: 44,
     minimumOrderQuantity: 32,
     availabilityStatus: "In Stock",
+    shippingInformation: "Ships in 1 month",
     thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
   ),
@@ -70,6 +74,7 @@ List<CartProductModel> sampleCartProducts = [
     stock: 59,
     minimumOrderQuantity: 25,
     availabilityStatus: "In Stock",
+    shippingInformation: "Ships in 1 month",
 
     thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
@@ -86,6 +91,7 @@ List<CartProductModel> sampleCartProducts = [
 
     minimumOrderQuantity: 6,
     availabilityStatus: "In Stock",
+    shippingInformation: "Ships in 1 month",
 
     thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png",
@@ -103,6 +109,7 @@ List<CartProductModel> sampleCartProducts = [
 
     minimumOrderQuantity: 46,
     availabilityStatus: "In Stock",
+    shippingInformation: "Ships in 1 month",
 
     thumbnail:
         "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png",
@@ -120,6 +127,7 @@ List<CartProductModel> sampleCartProducts = [
 
     minimumOrderQuantity: 20,
     availabilityStatus: "In Stock",
+    shippingInformation: "Ships in 1 month",
 
     thumbnail:
         "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/thumbnail.png",
@@ -137,6 +145,7 @@ List<CartProductModel> sampleCartProducts = [
 
     minimumOrderQuantity: 5,
     availabilityStatus: "In Stock",
+    shippingInformation: "Ships in 1 month",
 
     thumbnail:
         "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/thumbnail.png",
@@ -153,6 +162,7 @@ List<CartProductModel> sampleCartProducts = [
     stock: 91,
     minimumOrderQuantity: 8,
     availabilityStatus: "In Stock",
+    shippingInformation: "Ships in 1 month",
 
     thumbnail:
         "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/thumbnail.png",

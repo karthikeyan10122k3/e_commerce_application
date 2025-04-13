@@ -101,17 +101,13 @@ class _CartScreenState extends State<CartScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
-            GridView.builder(
-              // physics: NeverScrollableScrollPhysics(),
+            ListView.builder(
               shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-              ),
               itemCount: sampleCartProducts.length,
               itemBuilder: (context, index) {
                 final product = sampleCartProducts[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
                   child: CartCard(
                     cartItem: product,
                     onDelete: _onDelete,

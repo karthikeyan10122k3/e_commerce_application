@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:e_commerce_application/model/user/user_model.dart';
 import 'package:e_commerce_application/screens/(Auth)/registration/register_screen_2.dart';
 import 'package:e_commerce_application/widgets/layout/custom_drawer.dart';
@@ -16,7 +15,7 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
   final _mobileNumberController = TextEditingController();
   final _userOptController = TextEditingController();
   int _otp = 0;
-  UserModel? _userDetailObject;
+  late UserModel _userDetailObject;
   bool _showOptWidget = false;
 
   void _submit() {
@@ -34,14 +33,29 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
 
     setState(() {
       _userDetailObject = UserModel(
-        mobile: int.parse(_mobileNumberController.text.trim()),
+        firstName: '',
+        lastName: '',
+        userName: '',
+        password: '',
+        email: '',
+        role: UserRole.customer,
+        mobile: _mobileNumberController.text.trim(),
+        dob: '',
+        gender: '',
+        country: '',
+        state: '',
+        city: '',
+        zipCode: '',
+        isVerified: false,
+        userOrders: [],
+        userCartItems: [],
       );
       _showOptWidget = true;
     });
 
     final random = Random();
     _otp = 1000 + random.nextInt(9000);
-    debugPrint("Generated OTP: $_otp"); // Optional for developers
+    debugPrint("Generated OTP: $_otp");
   }
 
   void _otpVerification() {
@@ -57,9 +71,9 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
       return;
     }
     setState(() {
-      _userDetailObject?.isVerified = true;
+      _userDetailObject.isVerified = true;
     });
-    if (_userDetailObject != null && _userDetailObject?.isVerified == false) {
+    if (_userDetailObject.isVerified == false) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -81,7 +95,7 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
       context,
       MaterialPageRoute(
         builder:
-            (context) => RegisterScreen2(userDetailObject: _userDetailObject!),
+            (context) => RegisterScreen2(userDetailObject: _userDetailObject),
       ),
     );
   }

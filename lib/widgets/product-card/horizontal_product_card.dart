@@ -71,21 +71,50 @@ class HorizontalProductCard extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
-                  _isInCart
-                      ? ElevatedButton(
-                        onPressed: _onRemoveFromCart,
+                  Row(
+                    children: [
+                      _isInCart
+                          ? ElevatedButton(
+                            onPressed: _onRemoveFromCart,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                            ),
+                            child: const Text("Remove from Cart"),
+                          )
+                          : ElevatedButton(
+                            onPressed: _onAddToCart,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                            ),
+                            child: const Text(
+                              "Add to Cart",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                      SizedBox(width: 7),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/edit-product/${product.id}',
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
+                          backgroundColor: Colors.grey,
                         ),
-                        child: const Text("Remove from Cart"),
-                      )
-                      : ElevatedButton(
-                        onPressed: _onAddToCart,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
+                        child: const Text(
+                          "Edit",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        child: const Text("Add to Cart"),
                       ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -93,6 +122,5 @@ class HorizontalProductCard extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

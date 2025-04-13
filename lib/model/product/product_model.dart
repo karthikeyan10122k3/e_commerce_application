@@ -3,28 +3,28 @@ import 'package:e_commerce_application/model/product/dimensions_model.dart';
 import 'package:e_commerce_application/model/product/meta_model.dart';
 
 class Product {
-  final int id;
-  final String title;
-  final String description;
-  final String category;
-  final double price;
-  final double discountPercentage;
-  final double rating;
-  final int stock;
-  final List<String> tags;
-  final String brand;
-  final String sku;
-  final int weight;
-  final Dimensions dimensions;
-  final String warrantyInformation;
-  final String shippingInformation;
-  final String availabilityStatus;
-  final List<Review> reviews;
-  final String returnPolicy;
-  final int minimumOrderQuantity;
-  final Meta meta;
-  final List<String> images;
-  final String thumbnail;
+  int id;
+  String title;
+  String description;
+  String category;
+  double price;
+  double discountPercentage;
+  double rating;
+  int stock;
+  List<String> tags;
+  String brand;
+  String sku;
+  int weight;
+  Dimensions dimensions;
+  String warrantyInformation;
+  String shippingInformation;
+  String availabilityStatus;
+  List<Review> reviews;
+  String returnPolicy;
+  int minimumOrderQuantity;
+  Meta meta;
+  List<String> images;
+  String thumbnail;
 
   Product({
     required this.id,
@@ -50,6 +50,13 @@ class Product {
     required this.images,
     required this.thumbnail,
   });
+
+  @override
+  String toString() {
+    return 'Product(id: $id, title: $title, price: $price, category: $category, '
+        'discount: $discountPercentage, stock: $stock, availability: $availabilityStatus, '
+        'minOrderQty: $minimumOrderQuantity)';
+  }
 }
 
 List<Product> sampleProducts = [
