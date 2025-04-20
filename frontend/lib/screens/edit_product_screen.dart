@@ -1,4 +1,6 @@
+import 'package:e_commerce_application/model/product/edit_product_model.dart';
 import 'package:e_commerce_application/model/product/product_model.dart';
+import 'package:e_commerce_application/services/product_service.dart';
 import 'package:flutter/material.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -12,6 +14,7 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   late Product _editingProduct;
   late int _productId;
+  late EditProductModel _updatedProduct;
   bool _showFetchButton = false;
 
   final TextEditingController _idController = TextEditingController();
@@ -47,7 +50,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
         _minimumOrderQuantityController.text =
             _editingProduct.minimumOrderQuantity.toString();
       } catch (e) {
-        // Handle if product not found
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text("Product not found")));
@@ -100,11 +102,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
           int.tryParse(_minimumOrderQuantityController.text) ??
           _editingProduct.minimumOrderQuantity;
     });
+    EditProductModel _updatedProduct = EditProductModel(
+      title: _editingProduct.title,
+      price: _editingProduct.price,
+      category: _editingProduct.category,
+      discountPercentage: _editingProduct.discountPercentage,
+      stock: _editingProduct.stock,
+      availabilityStatus: _editingProduct.availabilityStatus,
+      minimumOrderQuantity: _editingProduct.minimumOrderQuantity,
+    );
 
-    int index = sampleProducts.indexWhere((prod) => prod.id == _productId);
-    if (index != -1) {
-      sampleProducts[index] = _editingProduct;
-    }
+    //Api call for Editing Product
+    ProductService().editProduct(_idController.text, _updatedProduct);
+
     _titleController.clear();
     _priceController.clear();
     _categoryController.clear();

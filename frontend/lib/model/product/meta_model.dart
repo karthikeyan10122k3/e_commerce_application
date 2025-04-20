@@ -10,4 +10,22 @@ class Meta {
     required this.barcode,
     required this.qrCode,
   });
+
+  factory Meta.fromJson(Map<String, dynamic> json) {
+    return Meta(
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+      barcode: json['barcode'],
+      qrCode: json['qrCode'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'barcode': barcode,
+      'qrCode': qrCode,
+    };
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:e_commerce_application/screens/cart_screen.dart';
 import 'package:e_commerce_application/screens/products_display_screen.dart';
 import 'package:e_commerce_application/screens/settings_screen.dart';
 import 'package:e_commerce_application/screens/user_profile_screen.dart';
@@ -26,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     ProductsDisplayScreen(),
     UserProfileScreen(),
-    CartScreen(),
+    // CartScreen(),
     SettingsScreen(),
   ];
 

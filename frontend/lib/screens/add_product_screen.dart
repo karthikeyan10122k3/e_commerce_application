@@ -30,7 +30,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
 
     final newProduct = Product(
-      id: sampleProducts.length + 1,
+      id: (sampleProducts.length + 1).toString(),
       title: _titleController.text,
       description: _descriptionController.text,
       price: double.tryParse(_priceController.text) ?? 0.0,

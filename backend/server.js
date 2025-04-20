@@ -1,11 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import productRoute from './routes/product.route.js'
 
 const app = express();
 app.use(express.json())
 dotenv.config();
+app.use(cors());
 
 const PORT = process.env.PORT || 7000;
 const MONGODB_CONNECTION_STRING = process.env.MONGODB_CONNECTION_STRING;
