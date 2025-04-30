@@ -3,7 +3,7 @@ import 'package:e_commerce_application/model/product/dimensions_model.dart';
 import 'package:e_commerce_application/model/product/meta_model.dart';
 
 class Product {
-  String? id;
+  String id;
   String title;
   String description;
   String category;

@@ -1,7 +1,9 @@
 import 'package:e_commerce_application/model/product/edit_product_model.dart';
 import 'package:e_commerce_application/model/product/product_model.dart';
+import 'package:e_commerce_application/provider/product_provider.dart';
 import 'package:e_commerce_application/services/product_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   final String productId;
@@ -12,9 +14,7 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
-  late Product _editingProduct;
-  late int _productId;
-  late EditProductModel _updatedProduct;
+  late String _productId;
   bool _showFetchButton = false;
 
   final TextEditingController _idController = TextEditingController();
@@ -32,101 +32,74 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void initState() {
     super.initState();
-    _productId = int.tryParse(widget.productId) ?? -1;
-
-    if (_productId != -1) {
-      try {
-        _editingProduct = sampleProducts.firstWhere(
-          (prod) => prod.id == _productId,
-        );
-        _idController.text = _editingProduct.id.toString();
-        _titleController.text = _editingProduct.title;
-        _priceController.text = _editingProduct.price.toString();
-        _categoryController.text = _editingProduct.category;
-        _discountPercentageController.text =
-            _editingProduct.discountPercentage.toString();
-        _stockController.text = _editingProduct.stock.toString();
-        _availabilityStatusController.text = _editingProduct.availabilityStatus;
-        _minimumOrderQuantityController.text =
-            _editingProduct.minimumOrderQuantity.toString();
-      } catch (e) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text("Product not found")));
-      }
+    _productId = widget.productId;
+    if (_productId != '-1') {
+      _loadProduct(_productId);
     } else {
       _showFetchButton = true;
     }
   }
 
-  void _fetchProduct() {
-    setState(() {
-      _productId = int.tryParse(_idController.text) ?? -1;
-      if (_productId != -1) {
-        try {
-          _editingProduct = sampleProducts.firstWhere(
-            (prod) => prod.id == _productId,
-          );
-          _titleController.text = _editingProduct.title;
-          _priceController.text = _editingProduct.price.toString();
-          _categoryController.text = _editingProduct.category;
-          _discountPercentageController.text =
-              _editingProduct.discountPercentage.toString();
-          _stockController.text = _editingProduct.stock.toString();
-          _availabilityStatusController.text =
-              _editingProduct.availabilityStatus;
-          _minimumOrderQuantityController.text =
-              _editingProduct.minimumOrderQuantity.toString();
-        } catch (e) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text("Product not found")));
-        }
-      }
-    });
+  void _loadProduct(String id) async {
+    try {
+      Product product = await ProductService().getProduct(id);
+      setState(() {
+        _idController.text = product.id;
+        _titleController.text = product.title;
+        _priceController.text = product.price.toString();
+        _categoryController.text = product.category;
+        _discountPercentageController.text =
+            product.discountPercentage.toString();
+        _stockController.text = product.stock.toString();
+        _availabilityStatusController.text = product.availabilityStatus;
+        _minimumOrderQuantityController.text =
+            product.minimumOrderQuantity.toString();
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Product not found")));
+    }
   }
 
-  void _submit() {
-    setState(() {
-      _editingProduct.title = _titleController.text;
-      _editingProduct.price =
-          double.tryParse(_priceController.text) ?? _editingProduct.price;
-      _editingProduct.category = _categoryController.text;
-      _editingProduct.discountPercentage =
-          double.tryParse(_discountPercentageController.text) ??
-          _editingProduct.discountPercentage;
-      _editingProduct.stock =
-          int.tryParse(_stockController.text) ?? _editingProduct.stock;
-      _editingProduct.availabilityStatus = _availabilityStatusController.text;
-      _editingProduct.minimumOrderQuantity =
-          int.tryParse(_minimumOrderQuantityController.text) ??
-          _editingProduct.minimumOrderQuantity;
-    });
-    EditProductModel _updatedProduct = EditProductModel(
-      title: _editingProduct.title,
-      price: _editingProduct.price,
-      category: _editingProduct.category,
-      discountPercentage: _editingProduct.discountPercentage,
-      stock: _editingProduct.stock,
-      availabilityStatus: _editingProduct.availabilityStatus,
-      minimumOrderQuantity: _editingProduct.minimumOrderQuantity,
+  void _fetchProduct() {
+    String id = _idController.text;
+    if (id.isNotEmpty) {
+      _loadProduct(id);
+    }
+  }
+
+  void _submit() async {
+    EditProductModel updatedProduct = EditProductModel(
+      title: _titleController.text,
+      price: double.tryParse(_priceController.text) ?? 0,
+      category: _categoryController.text,
+      discountPercentage:
+          double.tryParse(_discountPercentageController.text) ?? 0,
+      stock: int.tryParse(_stockController.text) ?? 0,
+      availabilityStatus: _availabilityStatusController.text,
+      minimumOrderQuantity:
+          int.tryParse(_minimumOrderQuantityController.text) ?? 0,
     );
 
-    //Api call for Editing Product
-    ProductService().editProduct(_idController.text, _updatedProduct);
+    try {
+      await Provider.of<ProductProvider>(
+        context,
+        listen: false,
+      ).editProduct(_idController.text, updatedProduct);
 
-    _titleController.clear();
-    _priceController.clear();
-    _categoryController.clear();
-    _discountPercentageController.clear();
-    _stockController.clear();
-    _availabilityStatusController.clear();
-    _minimumOrderQuantityController.clear();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Product updated successfully")));
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text("Product updated successfully")));
-    // print(sampleProducts);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.of(context).pop();
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Failed to update product")));
+    }
   }
 
   @override
@@ -147,9 +120,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
               Row(
                 children: [
                   SizedBox(
-                    width: 200, // Set the desired width
+                    width:
+                        MediaQuery.of(context).size.width *
+                        0.6, // 60% of screen width
                     child: _buildTextField(_idController, 'Product Id'),
                   ),
+
                   SizedBox(width: 30),
                   ElevatedButton(
                     onPressed: _fetchProduct,

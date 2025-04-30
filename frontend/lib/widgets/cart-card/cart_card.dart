@@ -1,8 +1,8 @@
-import 'package:e_commerce_application/model/cart/cart_product_model.dart';
+import 'package:e_commerce_application/model/cart/cart_model.dart';
 import 'package:flutter/material.dart';
 
 class CartCard extends StatefulWidget {
-  final CartProductModel cartItem;
+  final CartItemModel cartItem;
   final VoidCallback onDelete;
   final VoidCallback onIncrease;
   final VoidCallback onDecrease;
@@ -19,13 +19,14 @@ class CartCard extends StatefulWidget {
 }
 
 class _CartCardState extends State<CartCard> {
-  late CartProductModel _cartItem;
+  late CartItemModel _cartItem;
   late VoidCallback _onDelete;
   late VoidCallback _onIncrease;
   late VoidCallback _onDecrease;
 
   double get originalPrice =>
-      _cartItem.price / (1 - _cartItem.discountPercentage / 100);
+      _cartItem.product.price /
+      (1 - _cartItem.product.discountPercentage / 100);
 
   @override
   void initState() {
@@ -53,13 +54,13 @@ class _CartCardState extends State<CartCard> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      '/product-details/${_cartItem.itemId}',
+                      '/product-details/${_cartItem.product.id}',
                     );
                   },
                   child: Image.network(
                     height: 200,
                     width: 100,
-                    _cartItem.thumbnail,
+                    _cartItem.product.thumbnail,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -90,7 +91,7 @@ class _CartCardState extends State<CartCard> {
                       IconButton(
                         icon: const Icon(Icons.add),
                         onPressed:
-                            _cartItem.quantity < _cartItem.stock
+                            _cartItem.quantity < _cartItem.product.stock
                                 ? _onIncrease
                                 : null,
                         iconSize: 20,
@@ -112,51 +113,46 @@ class _CartCardState extends State<CartCard> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        '/product-details/${_cartItem.itemId}',
+                        '/product-details/${_cartItem.product.id}',
                       );
                     },
                     child: Text(
-                      _cartItem.title,
+                      _cartItem.product.title,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
 
                   Text(
-                    _cartItem.description,
+                    _cartItem.product.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "₹${_cartItem.price.toStringAsFixed(2)}",
+                    "₹${_cartItem.product.price.toStringAsFixed(2)}",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "M.R.P: ₹${(_cartItem.price / (1 - _cartItem.discountPercentage / 100)).toStringAsFixed(2)} "
-                    "(${_cartItem.discountPercentage}% off)",
+                    "M.R.P: ₹${(_cartItem.product.price / (1 - _cartItem.product.discountPercentage / 100)).toStringAsFixed(2)} "
+                    "(${_cartItem.product.discountPercentage}% off)",
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   const SizedBox(height: 5),
-                  Text("Rating: ⭐ ${_cartItem.rating} / 5 )"),
+                  Text("Rating: ⭐ ${_cartItem.product.rating} / 5 )"),
                   Text(
-                    _cartItem.availabilityStatus == "Low Stock"
-                        ? "Only ${_cartItem.stock} left in stock"
+                    _cartItem.product.availabilityStatus == "Low Stock"
+                        ? "Only ${_cartItem.product.stock} left in stock"
                         : "In stock",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color:
-                          _cartItem.availabilityStatus == "Low Stock"
+                          _cartItem.product.availabilityStatus == "Low Stock"
                               ? Colors.red
                               : Colors.green,
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Text(
-                    "🚚 ${_cartItem.shippingInformation}",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
                   Row(
                     children: [
                       ElevatedButton(

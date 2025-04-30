@@ -1,9 +1,8 @@
-import 'package:e_commerce_application/model/cart/cart_product_model.dart';
 import 'package:e_commerce_application/model/product/product_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final int productId;
+  final String productId;
 
   const ProductDetailsScreen({super.key, required this.productId});
 
@@ -13,7 +12,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late Product _product;
-  late int _productId;
+  late String _productId;
   late bool _isInCart;
 
   void _addItemToCart() {}
@@ -30,7 +29,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       orElse: () => throw Exception("Product not found"),
     );
 
-    _isInCart = sampleCartProducts.any((item) => item.itemId == _productId);
+    _isInCart = sampleProducts.any((item) => item.id == _productId);
   }
 
   @override

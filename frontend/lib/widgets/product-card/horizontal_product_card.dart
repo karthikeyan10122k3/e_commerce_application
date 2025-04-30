@@ -18,7 +18,6 @@ class HorizontalProductCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          // Image Section
           Container(
             width: 120,
             height: 120,

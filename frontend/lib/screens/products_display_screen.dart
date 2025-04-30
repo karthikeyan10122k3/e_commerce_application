@@ -1,8 +1,8 @@
-import 'package:e_commerce_application/model/product/product_model.dart';
-import 'package:e_commerce_application/services/product_service.dart';
+import 'package:e_commerce_application/provider/product_provider.dart';
 import 'package:e_commerce_application/widgets/product-card/horizontal_product_card.dart';
 import 'package:e_commerce_application/widgets/product-card/vertical_product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductsDisplayScreen extends StatefulWidget {
   const ProductsDisplayScreen({super.key});
@@ -26,29 +26,31 @@ class _ProductsDisplayScreenState extends State<ProductsDisplayScreen> {
     return horizontalCardCategory.contains(category);
   }
 
-  late Future<List<Product>> _futureProducts;
-
   @override
   void initState() {
     super.initState();
-    _futureProducts = ProductService().getAllProducts();
+    Provider.of<ProductProvider>(context, listen: false).fetchProducts();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Product>>(
-        future: _futureProducts,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: Consumer<ProductProvider>(
+        builder: (context, provider, _) {
+          if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          }
+
+          if (provider.errorMessage.isNotEmpty) {
+            return Center(child: Text(provider.errorMessage));
+          }
+
+          final products = provider.products;
+
+          if (products.isEmpty) {
             return const Center(child: Text("No products found."));
           }
 
-          final products = snapshot.data!;
           List<Widget> productWidgets = [];
 
           for (int i = 0; i < products.length; i++) {
@@ -75,7 +77,7 @@ class _ProductsDisplayScreenState extends State<ProductsDisplayScreen> {
                     child: Row(
                       children: [
                         Expanded(child: VerticalProductCard(product: product)),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: VerticalProductCard(
                             product: products[nextIndex],
@@ -85,7 +87,7 @@ class _ProductsDisplayScreenState extends State<ProductsDisplayScreen> {
                     ),
                   ),
                 );
-                i++; // skip next index as it's paired
+                i++; // Skip the paired product
               } else {
                 productWidgets.add(
                   Padding(

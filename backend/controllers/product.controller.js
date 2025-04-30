@@ -28,19 +28,71 @@ export const getProduct = async(req,res) =>{
 }
 
 export const addProduct = async (req, res) => {
-    const product = req.body;
+    const {
+        _id, 
+        title,
+        description,
+        price,
+        discountPercentage,
+        rating,
+        stock,
+        category,
+        tags,
+        brand,
+        sku,
+        weight,
+        dimensions,
+        warrantyInformation,
+        shippingInformation,
+        availabilityStatus,
+        reviews,
+        returnPolicy,
+        minimumOrderQuantity,
+        meta,
+        images,
+        thumbnail
+    } = req.body;
+
+    const creatingNewProduct = {
+        title,
+        description,
+        price,
+        discountPercentage,
+        rating,
+        stock,
+        category,
+        tags,
+        brand,
+        sku,
+        weight,
+        dimensions,
+        warrantyInformation,
+        shippingInformation,
+        availabilityStatus,
+        reviews,
+        returnPolicy,
+        minimumOrderQuantity,
+        meta,
+        images,
+        thumbnail
+    };
+
     try {
-        const newProduct = await ProductModel.create(product);
+        const newProduct = await ProductModel.create(creatingNewProduct);
 
         res.status(201).json({ message: "Product Added Successfully!", product: newProduct });
     } catch (error) {
+        console.log(error);
+
         res.status(500).json({ error: "Error occurred while adding product", details: error.message });
     }
 };
 
 
+
 export const editProduct = async(req, res) =>{
     const {id} = req.params;
+    
     if(!id) return res.status(400).json({error : "Product Not Found!"});
 
     const updatedData = req.body;

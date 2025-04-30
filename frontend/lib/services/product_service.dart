@@ -64,4 +64,27 @@ class ProductService {
       throw Exception("Exception in editProduct: $error");
     }
   }
+
+  Future<Product> addProduct(Product newProduct) async {
+    final productJson = newProduct.toJson();
+
+    try {
+      final response = await http.post(
+        Uri.parse(_baseUrl),
+        body: jsonEncode(productJson),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        final product = Product.fromJson(data['product']);
+        return product;
+      } else {
+        final errorData = jsonDecode(response.body);
+        throw Exception("Failed to add product: ${errorData['error']}");
+      }
+    } catch (error) {
+      throw Exception("Exception in addProduct: $error");
+    }
+  }
 }

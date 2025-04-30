@@ -2,6 +2,7 @@ import 'package:e_commerce_application/screens/(Auth)/login/login_screen.dart';
 import 'package:e_commerce_application/screens/(Auth)/registration/register_screen_1.dart';
 import 'package:e_commerce_application/screens/add_product_screen.dart';
 import 'package:e_commerce_application/screens/cart_screen.dart';
+import 'package:e_commerce_application/screens/edit_product_screen.dart';
 import 'package:e_commerce_application/screens/home_screen.dart';
 import 'package:e_commerce_application/screens/product_details_screen.dart';
 import 'package:e_commerce_application/screens/products_bought_screen.dart';
@@ -42,18 +43,18 @@ class App extends StatelessWidget {
         final uri = Uri.parse(settings.name!);
         if (uri.pathSegments.length == 2 &&
             uri.pathSegments[0] == 'product-details') {
-          final int id = int.parse(uri.pathSegments[1]);
+          final String id = uri.pathSegments[1];
           return MaterialPageRoute(
             builder: (context) => ProductDetailsScreen(productId: id),
           );
         }
-        // if (uri.pathSegments.length == 2 &&
-        //     uri.pathSegments[0] == 'edit-product') {
-        //   final id = uri.pathSegments[1];
-        //   return MaterialPageRoute(
-        //     builder: (context) => EditProductScreen(productId: id),
-        //   );
-        // }
+        if (uri.pathSegments.length == 2 &&
+            uri.pathSegments[0] == 'edit-product') {
+          final id = uri.pathSegments[1];
+          return MaterialPageRoute(
+            builder: (context) => EditProductScreen(productId: id),
+          );
+        }
         return null;
       },
     );

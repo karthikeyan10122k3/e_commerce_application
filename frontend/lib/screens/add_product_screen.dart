@@ -1,7 +1,9 @@
 import 'package:e_commerce_application/model/product/dimensions_model.dart';
 import 'package:e_commerce_application/model/product/meta_model.dart';
 import 'package:e_commerce_application/model/product/product_model.dart';
+import 'package:e_commerce_application/provider/product_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
@@ -21,7 +23,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _minimumOrderQuantityController = TextEditingController();
   final _thumbnailController = TextEditingController();
 
-  void _submit() {
+  Future<void> _submit() async {
     if (_titleController.text.isEmpty || _priceController.text.isEmpty) {
       ScaffoldMessenger.of(
         context,
@@ -30,7 +32,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
 
     final newProduct = Product(
-      id: (sampleProducts.length + 1).toString(),
       title: _titleController.text,
       description: _descriptionController.text,
       price: double.tryParse(_priceController.text) ?? 0.0,
@@ -56,7 +57,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         updatedAt: DateTime.now().toString(),
         barcode: "9164035109868",
         qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-      ), // Sample values
+      ),
       images: [
         "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/1.png",
         "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/2.png",
@@ -65,21 +66,29 @@ class _AddProductScreenState extends State<AddProductScreen> {
       thumbnail: _thumbnailController.text,
     );
 
-    sampleProducts.add(newProduct);
+    try {
+      await Provider.of<ProductProvider>(
+        context,
+        listen: false,
+      ).addProduct(newProduct);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Product added successfully')));
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Product added successfully')));
-
-    _titleController.clear();
-    _descriptionController.clear();
-    _priceController.clear();
-    _categoryController.clear();
-    _discountPercentageController.clear();
-    _stockController.clear();
-    _availabilityStatusController.clear();
-    _minimumOrderQuantityController.clear();
-    _thumbnailController.clear();
+      _titleController.clear();
+      _descriptionController.clear();
+      _priceController.clear();
+      _categoryController.clear();
+      _discountPercentageController.clear();
+      _stockController.clear();
+      _availabilityStatusController.clear();
+      _minimumOrderQuantityController.clear();
+      _thumbnailController.clear();
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to add product: $e')));
+    }
   }
 
   @override
